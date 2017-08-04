@@ -20,16 +20,32 @@ function [H, theta, rho] = hough_lines_acc(BW, varargin)
 
     % rhoStep = p.Results.RhoResolution;
     % theta = p.Results.Theta;
-    rhoStep = 0.33;
+    rhoStep = 1;
     theta = linspace(-90, 89, 180);
+    thetaAmount = size(theta, 2);
 
-    img_size = size(BW);
-    max_rho = norm(img_size);
-    rho = -max_rho:rhoStep:max_rho;
-    disp(max_rho);
-    disp(rho);
+    imgSize = size(BW);
+    maxRho = norm(imgSize);
+    rhoAmount = (maxRho * 2 - mod(maxRho * 2, rhoStep))/rhoStep + 1;
+    rho = zeros(1, rhoAmount);
+    for ii = 1:rhoAmount
+      rho(ii) = -maxRho + (ii - 1) * rhoStep;
+    endfor
 
-    H=0;
-    theta=0;
-    rho=0;
+    H = zeros(rhoAmount, thetaAmount);
+
+    for row = 1:imgSize(1)
+      for col = 1:imgSize(2)
+        if(BW(row, col)~=1)
+          continue
+        end
+        for thetaIndex = 1:thetaAmount
+          currentTheta = theta(thetaIndex);
+          currentRho = col * cos(currentTheta) - row * sin(currentTheta);
+          rhoIndex = (currentRho + maxRho - mod(currentRho + maxRho, rhoStep))/rhoStep + 1;
+          H(rhoIndex,thetaIndex)+=1;
+        endfor
+      endfor
+    endfor
+
 endfunction
