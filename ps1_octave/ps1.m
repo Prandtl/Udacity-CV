@@ -18,7 +18,7 @@ imwrite(gray, fullfile('output', 'ps1-2-a-1.png'));  % save as output/ps1-2-a-1.
 imwrite(adjustedHough, fullfile('output', 'ps1-2-a-2.png'));  % save as output/ps1-2-a-2.png
 
 %% 2-b
-%peaks = hough_peaks(H, 10);  % defined in hough_peaks.m
+peaks = hough_peaks(H, 10);  % defined in hough_peaks.m
 %% TODO: Highlight peak locations on accumulator array, save as output/ps1-2-b-1.png
 
 %% TODO: Rest of your code here
