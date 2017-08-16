@@ -18,7 +18,8 @@ imwrite(gray, fullfile('output', 'ps1-2-a-1.png'));  % save as output/ps1-2-a-1.
 imwrite(adjustedHough, fullfile('output', 'ps1-2-a-2.png'));  % save as output/ps1-2-a-2.png
 
 %% 2-b
-peaks = hough_peaks(H, 10);  % defined in hough_peaks.m
+peaks = hough_peaks(H, 10, 'Threshold', 0.1 * max(H(:)));  % defined in hough_peaks.m
+disp(size(peaks));
 accumRgb = cat(3, gray, gray, gray);
 peaksSize = size(peaks);
 for ii = 1:peaksSize(1)
@@ -30,11 +31,14 @@ for ii = 1:peaksSize(1)
     accumRgb(row, col, 3) = 0;
 endfor
 
-imwrite(accumRgb, fullfile('output', 'ps1-2-b-1.png'));  % save as output/ps1-2-a-1.png
-%% TODO: Highlight peak locations on accumulator array, save as output/ps1-2-b-1.png
-% disp(peaks);
-% figure, imagesc(H, 'XData', theta, 'YData', rho), title('Accumulator array');
-% hold on;
-% plot(theta(peaks(:, 2)), rho(peaks(:, 1)), 'rs');
-% hold off;
+imwrite(accumRgb, fullfile('output', 'ps1-2-b-1.png'));
+
+workingCopy = img;
+
+if(size(size(img)) == 2)
+  workingCopy = cat(3, img, img, img);
+end
+
+hough_lines_draw(workingCopy, fullfile('output', 'ps1-2-c-1.png'), peaks, rho, theta);
+
 %% TODO: Rest of your code here

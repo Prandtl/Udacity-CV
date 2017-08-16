@@ -50,6 +50,4 @@ function peaks = hough_peaks(H, varargin)
         done = true;
       end
     end
-
-    % TODO: Your code here
 endfunction
