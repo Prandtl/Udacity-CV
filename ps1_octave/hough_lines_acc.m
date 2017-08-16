@@ -1,4 +1,4 @@
-function [H, theta, rho] = hough_lines_acc(BW, step, thetas)
+function [H, theta, rho] = hough_lines_acc(BW, varargin)
     % Compute Hough accumulator array for finding lines.
     %
     % BW: Binary (black and white) image containing edge pixels
@@ -13,9 +13,14 @@ function [H, theta, rho] = hough_lines_acc(BW, step, thetas)
     % Note: Rows of H should correspond to values of rho, columns those of theta.
 
     %% Parse input arguments
-    rhoStep = step;
-    theta = thetas;
+    p = inputParser();
+    p.addParamValue('RhoResolution', 1);
+    p.addParamValue('Theta', linspace(-90, 89, 180));
+    p.parse(varargin{:});
 
+    rhoStep = p.Results.RhoResolution;
+    theta = p.Results.Theta;
+    
     thetaAmount = size(theta, 2);
 
     imgSize = size(BW);
