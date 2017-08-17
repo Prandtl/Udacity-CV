@@ -20,7 +20,7 @@ function [H, theta, rho] = hough_lines_acc(BW, varargin)
 
     rhoStep = p.Results.RhoResolution;
     theta = p.Results.Theta;
-    
+
     thetaAmount = size(theta, 2);
 
     imgSize = size(BW);
@@ -40,7 +40,7 @@ function [H, theta, rho] = hough_lines_acc(BW, varargin)
         end
         for thetaIndex = 1:thetaAmount
           currentTheta = theta(thetaIndex);
-          currentRho = col * cos(currentTheta) - row * sin(currentTheta);
+          currentRho = col * cosd(currentTheta) - row * sind(currentTheta);
           rhoIndex = (currentRho + maxRho - mod(currentRho + maxRho, rhoStep))/rhoStep + 1;
           H(rhoIndex,thetaIndex)+=1;
         endfor

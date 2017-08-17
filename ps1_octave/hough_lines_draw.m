@@ -16,26 +16,26 @@ function hough_lines_draw(img, outfile, peaks, rho, theta)
       rhoii = rho(peaks(ii, 1));
       thetaii = theta(peaks(ii, 2));
 
-      sin_theta = sin(thetaii);
-      cos_theta = cos(thetaii);
+      sin_theta = sind(thetaii);
+      cos_theta = cosd(thetaii);
 
-      if(abs(sin_theta) > 0.001)
+      if(abs(sin_theta) > 0.1)
         for xx = xs
-            yx = floor(-(cos(thetaii)/sin(thetaii)) * xx + (rhoii/sin(thetaii)));
+            yx = floor(-(cosd(thetaii)/sind(thetaii)) * xx + (rhoii/sind(thetaii)));
 
             if(yx < 1 || yx > imgSize(1))
               continue;
             end
-            workingCopy(xx, yx, 1) = 0;
-            workingCopy(xx, yx, 2) = 255;
-            workingCopy(xx, yx, 3) = 0;
+            % workingCopy(xx, yx, 1) = 0;
+            % workingCopy(xx, yx, 2) = 255;
+            % workingCopy(xx, yx, 3) = 0;
         endfor
       end
 
 
-      if(abs(cos_theta) > 0.001)
+      if(abs(cos_theta) > 0.1)
         for yy = ys
-            xy = floor(-(sin(thetaii)/cos(thetaii)) * yy + (rhoii/cos(thetaii)));
+            xy = floor(-(sind(thetaii)/cosd(thetaii)) * yy + (rhoii/cosd(thetaii)));
 
             if(xy < 1 || xy > imgSize(2))
               continue;
